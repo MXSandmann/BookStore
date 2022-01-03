@@ -7,6 +7,7 @@
   <ItemGroup>
     <Folder Include="Autors\Queries\" />
     <Folder Include="Books\Queries\" />
+    <Folder Include="Genres\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -17,8 +17,5 @@ namespace UseCases.Autors.Commands.CreateAutorCommand
 
         public string Name { get; }
         public string Surname { get; }
-
-        
-
     }
 }

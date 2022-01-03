@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UseCases.Books.Commands.CreateBookCommand;
+using WebApp.DTO.Requests;
 
 namespace WebApp.Controllers
 {
@@ -15,9 +16,15 @@ namespace WebApp.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<int> CreateBook()
+        public async Task<int> CreateBook([FromBody] CreateBookDTO dto)
         {
-            var result = await mediator.Send(new CreateBookRequest());
+            var result = await mediator.Send(new CreateBookRequest(dto.Title,
+                dto.Description,
+                dto.PagesCount,
+                dto.Year,
+                dto.Price,
+                dto.Autors,
+                dto.Genres));
             return result;
         }
     }

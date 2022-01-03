@@ -21,5 +21,13 @@ namespace WebApp.Controllers
             var result = await mediator.Send(new CreateAutorRequest(dto.Name, dto.Surname));
             return result;
         }
+
+        //[HttpDelete("delete")]
+        //public async Task<int> DeleteAutor(int id)
+        //{
+
+        //}
+            
+
     }
 }
