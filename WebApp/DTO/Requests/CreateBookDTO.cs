@@ -5,12 +5,12 @@ namespace WebApp.DTO.Requests
 {
     public class CreateBookDTO
     {
-        public string Title { get; }
-        public string Description { get; }
-        public int PagesCount { get; }
-        public int Year { get; }
-        public double Price { get; }
-        public List<Autor> Autors { get; }
-        public List<Genre> Genres { get; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public int PagesCount { get; set; }
+        public int Year { get; set; }
+        public double Price { get; set; }
+        public List<int> Autors { get; set; }
+        public List<int> Genres { get; set; }
     }
 }

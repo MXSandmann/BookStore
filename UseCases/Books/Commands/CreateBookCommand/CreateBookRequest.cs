@@ -15,8 +15,8 @@ namespace UseCases.Books.Commands.CreateBookCommand
             int pagesCount,
             int year,
             double price,
-            List<Autor> autors,
-            List<Genre> genres)
+            List<int> autors,
+            List<int> genres)
         {
             Title = title;
             Description = description;
@@ -32,7 +32,7 @@ namespace UseCases.Books.Commands.CreateBookCommand
         public int PagesCount { get; }
         public int Year { get; }
         public double Price { get; }
-        public List<Autor> Autors { get; }
-        public List<Genre> Genres { get; }
+        public List<int> Autors { get; }
+        public List<int> Genres { get; }
     }
 }

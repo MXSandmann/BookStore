@@ -3,6 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UseCases.Autors.Commands.CreateAutorCommand;
 using WebApp.DTO.Requests;
+using WebApp.DTO.Responses;
+using UseCases.DTO.Responses;
+using UseCases.Autors.Queries.GetAutorQuery.All;
+using UseCases.Autors.Queries.GetAutorQuery.ByID;
+using System.Collections.Generic;
+
 
 namespace WebApp.Controllers
 {
@@ -16,18 +22,28 @@ namespace WebApp.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<int> CreateAutor([FromBody] CreateAutorDTO dto)
+        public async Task<APIResponse<int>> CreateAutor([FromBody] CreateAutorDTO dto)
         {
             var result = await mediator.Send(new CreateAutorRequest(dto.Name, dto.Surname));
-            return result;
+            return APIResponse<int>.OK(result);
         }
 
-        //[HttpDelete("delete")]
-        //public async Task<int> DeleteAutor(int id)
-        //{
+        [HttpGet("get/{id}")]
+        public async Task<APIResponse<AutorWithBooksDTO>> GetAutorById(int id)
+        {
+            var result = await mediator.Send(new GetAutorByIdRequest(id));
+            //return result;
+            return APIResponse<AutorWithBooksDTO>.OK(result);
 
-        //}
-            
+        }
+
+        [HttpGet("get")]
+        public async Task<APIResponse<IEnumerable<AutorWithBooksDTO>>> GetAutorAll()
+        {
+            var result = await mediator.Send(new GetAutorAllRequest());
+            return APIResponse<IEnumerable<AutorWithBooksDTO>>.OK(result);
+        }
+
 
     }
 }

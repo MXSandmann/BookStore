@@ -1,8 +1,13 @@
 ﻿using MediatR;
 using UseCases.Genres.Commands.CreateGenreCommand;
+using UseCases.Genres.Queries.GetGenreQuery.All;
+using UseCases.Genres.Queries.GetGenreQuery.ByID;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using WebApp.DTO.Requests;
+using WebApp.DTO.Responses;
+using System.Collections.Generic;
+using UseCases.DTO.Responses;
 
 namespace WebApp.Controllers
 {
@@ -16,10 +21,28 @@ namespace WebApp.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<int> CreateGenre([FromBody] CreateGenreDTO dto)
+        public async Task<APIResponse<int>> CreateGenre([FromBody] CreateGenreDTO dto)
         {
             var result = await mediator.Send(new CreateGenreRequest(dto.Name));
-            return result;
+            return APIResponse<int>.OK(result);
+        }
+
+        [HttpGet("get/{id}")]
+        public async Task<APIResponse<GenreDTO>> GetGenreByID(int id) 
+        {
+            var result = await mediator.Send(new GetGenreByIDRequest(id));
+
+            return APIResponse<GenreDTO>.OK(result);
+
+        }
+
+        [HttpGet("get")]
+        public async Task<APIResponse<IEnumerable<GenreDTO>>> GetGenresAll()
+        {
+            var result = await mediator.Send(new GetGenreAllRequest());
+
+            return APIResponse<IEnumerable<GenreDTO>>.OK(result); 
+
         }
     }
 }

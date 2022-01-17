@@ -1,8 +1,14 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UseCases.Books.Commands.CreateBookCommand;
+using UseCases.Books.Queries.GetBookAll;
+using UseCases.Books.Queries.GetBookByID;
+using UseCases.DTO.Responses;
 using WebApp.DTO.Requests;
+using WebApp.DTO.Responses;
+using UseCases.Books.Commands.DeleteBookCommand;
 
 namespace WebApp.Controllers
 {
@@ -16,7 +22,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<int> CreateBook([FromBody] CreateBookDTO dto)
+        public async Task<APIResponse<int>> CreateBook([FromBody] CreateBookDTO dto)
         {
             var result = await mediator.Send(new CreateBookRequest(dto.Title,
                 dto.Description,
@@ -25,7 +31,28 @@ namespace WebApp.Controllers
                 dto.Price,
                 dto.Autors,
                 dto.Genres));
-            return result;
+            return APIResponse<int>.OK(result);
+        }
+
+        [HttpGet("get")]
+        public async Task<APIResponse<IEnumerable<BookDTO>>> GetAllBooks()
+        {
+            var result = await mediator.Send(new GetBookAllRequest());
+            return APIResponse<IEnumerable<BookDTO>>.OK(result);
+        }
+
+        [HttpGet("get/{id}")]
+        public async Task<APIResponse<BookDTO>> GetBookById(int id)
+        {
+            var result = await mediator.Send(new GetBookByIDRequest(id));
+            return APIResponse<BookDTO>.OK(result);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<APIResponse<int>> DeleteBook(int id)
+        {
+            var result = await mediator.Send(new DeleteBookRequest(id));
+            return APIResponse<int>.OK(result);
         }
     }
 }
