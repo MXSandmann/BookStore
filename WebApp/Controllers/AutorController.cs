@@ -8,7 +8,8 @@ using UseCases.DTO.Responses;
 using UseCases.Autors.Queries.GetAutorQuery.All;
 using UseCases.Autors.Queries.GetAutorQuery.ByID;
 using System.Collections.Generic;
-
+using UseCases.Autors.Commands.UpdateAutorCommand;
+using UseCases.Autors.Commands.DeleteAutorCommand;
 
 namespace WebApp.Controllers
 {
@@ -43,6 +44,21 @@ namespace WebApp.Controllers
             var result = await mediator.Send(new GetAutorAllRequest());
             return APIResponse<IEnumerable<AutorWithBooksDTO>>.OK(result);
         }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<APIResponse<int>> DeleteAutor(int id)
+        {
+            var result = await mediator.Send(new DeleteAutorRequest(id));
+            return APIResponse<int>.OK(result);
+        }
+
+        [HttpPatch("update/{id}")]
+        public async Task<APIResponse<int>> UpdateAutor(int id)
+        {
+            var result = await mediator.Send(new UpdateAutorRequest(id));
+            return APIResponse<int>.OK(result);
+        }
+
 
 
     }

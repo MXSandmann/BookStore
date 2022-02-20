@@ -8,6 +8,7 @@ using WebApp.DTO.Requests;
 using WebApp.DTO.Responses;
 using System.Collections.Generic;
 using UseCases.DTO.Responses;
+using UseCases.Genres.Commands.DeleteGenreCommand;
 
 namespace WebApp.Controllers
 {
@@ -43,6 +44,13 @@ namespace WebApp.Controllers
 
             return APIResponse<IEnumerable<GenreDTO>>.OK(result); 
 
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<APIResponse<int>> DeleteGenre(int id)
+        {
+            var result = await mediator.Send(new DeleteGenreRequest(id));
+            return APIResponse<int>.OK(result);
         }
     }
 }

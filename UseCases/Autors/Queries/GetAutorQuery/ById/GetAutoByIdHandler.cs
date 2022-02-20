@@ -26,7 +26,6 @@ namespace UseCases.Autors.Queries.GetAutorQuery.ByID
             if (autor == null)
                 throw new NotFoundException(typeof(Autor), request.Id);
             
-            //IList<Book> books = (IList<Book>)autor.Books;
             List<string> bookTitles = new(autor.Books.Count);
             foreach (var book in autor.Books)
                 bookTitles.Add(book.Title);
