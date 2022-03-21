@@ -21,11 +21,13 @@ namespace UseCases.Autors.Commands.UpdateAutorCommand
         }
         public async Task<int> Handle(UpdateAutorRequest request, CancellationToken cancellationToken)
         {
-            var autor = await dbContext.Autors.Include(a => a.Books).FirstOrDefaultAsync(a => a.ID == request.Id);
+            var autor = await dbContext.Autors.FirstOrDefaultAsync(a => a.ID == request.Id);
             if (autor == null)
                 throw new NotFoundException(typeof(Autor), request.Id);
 
-            return 0;
+            autor.Update(request.Name, request.Surname);
+            await dbContext.SaveChangesAsync();           
+            return autor.ID;
         }
     }
 }

@@ -21,7 +21,13 @@ namespace Domain
         public string Surname { get; private set; }
         public IReadOnlyCollection<Book> Books => _books.AsReadOnly();
 
-        private List<Book> _books;   
+        private List<Book> _books;
+
+        public void Update(string name, string surname)
+        {
+            Name = name;
+            Surname = surname;
+        }
 
     }
 }

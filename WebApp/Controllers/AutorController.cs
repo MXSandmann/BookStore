@@ -52,10 +52,11 @@ namespace WebApp.Controllers
             return APIResponse<int>.OK(result);
         }
 
-        [HttpPatch("update/{id}")]
-        public async Task<APIResponse<int>> UpdateAutor(int id)
+        
+        [HttpPut("update")]
+        public async Task<APIResponse<int>> UpdateAutor([FromBody] UpdateAutorDTO dto)
         {
-            var result = await mediator.Send(new UpdateAutorRequest(id));
+            var result = await mediator.Send(new UpdateAutorRequest(dto.Id, dto.Name, dto.Surname));
             return APIResponse<int>.OK(result);
         }
 
