@@ -21,7 +21,10 @@ namespace Infrastructure.JwtToken
             var handler = new JwtSecurityTokenHandler();
             var signingCredentials = new SigningCredentials(JwtOptions.GetKey(), SecurityAlgorithms.HmacSha256Signature);
             var identity = new ClaimsIdentity(claims);
-            var token = handler.CreateJwtSecurityToken(subject: identity, signingCredentials: signingCredentials);
+            var token = handler.CreateJwtSecurityToken(subject: identity, 
+                signingCredentials: signingCredentials,
+                issuer: JwtOptions.Issuer,
+                audience: JwtOptions.Audience);
             return handler.WriteToken(token);
         }
     }

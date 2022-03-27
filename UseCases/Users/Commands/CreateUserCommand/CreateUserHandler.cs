@@ -3,6 +3,7 @@ using Domain;
 using Domain.Exceptions;
 using Infrastructure.JwtToken;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace UseCases.Users.Commands.CreateUserCommand
         public async Task<string> Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
             // Check if the new autor already exists in dbContext
-            var existingUser = dbContext.Users.FirstOrDefault(s => s.UserName == request.UserName);
+            var existingUser = await dbContext.Users.FirstOrDefaultAsync(s => s.UserName == request.UserName);
 
             if (existingUser != null)
             {
@@ -40,7 +41,7 @@ namespace UseCases.Users.Commands.CreateUserCommand
             {
                 new Claim("Id", user.ID.ToString()),
                 new Claim("UserName", user.UserName),
-                new Claim("Role", user.Role.ToString())
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
             return jwtTokenProvider.CreateToken(list);
         }

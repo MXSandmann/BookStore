@@ -9,6 +9,7 @@ using UseCases.DTO.Responses;
 using WebApp.DTO.Requests;
 using WebApp.DTO.Responses;
 using UseCases.Books.Commands.DeleteBookCommand;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.Controllers
 {
@@ -22,6 +23,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize]
         public async Task<APIResponse<int>> CreateBook([FromBody] CreateBookDTO dto)
         {
             var result = await mediator.Send(new CreateBookRequest(dto.Title,

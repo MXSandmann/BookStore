@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace Infrastructure.UserProvider
 {
-    public enum Role : int
+    public interface ICurrentUserProvider
     {
-        Admin, User
+        int UserId();
+        
+
+        
     }
 }

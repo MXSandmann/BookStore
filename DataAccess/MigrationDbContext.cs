@@ -15,7 +15,7 @@ namespace DataAccess.EF
             var optBuilder = new DbContextOptionsBuilder<ApplicationDBContext>();
             optBuilder.UseSqlServer("Server=DESKTOP-G5UDAJT\\SQLEXPRESS;Database=AppDB;Trusted_Connection=True;");
 
-            return new ApplicationDBContext(optBuilder.Options);
+            return new ApplicationDBContext(optBuilder.Options, default);
         }
     }
 }

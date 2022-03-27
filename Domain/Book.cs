@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Book : Entity
+    public class Book : AuditableEntity
     {
         public Book(string title,
             string description,
