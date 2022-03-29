@@ -33,7 +33,6 @@ namespace WebApp.Controllers
         public async Task<APIResponse<AutorWithBooksDTO>> GetAutorById(int id)
         {
             var result = await mediator.Send(new GetAutorByIdRequest(id));
-            //return result;
             return APIResponse<AutorWithBooksDTO>.OK(result);
 
         }
