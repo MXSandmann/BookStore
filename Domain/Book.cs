@@ -41,6 +41,12 @@ namespace Domain
         public IReadOnlyCollection<Genre> Genres => _genres.AsReadOnly();
         private List<Genre> _genres;
 
-
+        public void Update(string title, int pagesCount, int year, double price)
+        {
+            Title = title;
+            PagesCount = pagesCount;
+            Year = year;
+            Price = price;
+        }
     }
 }
