@@ -46,6 +46,7 @@ namespace UseCases.Books.Queries.GetBookAll
 
                 results.Add(new()
                 {
+                    ID = book.ID,
                     Title = book.Title,
                     Description = book.Description,
                     PagesCount = book.PagesCount,
