@@ -10,6 +10,7 @@ using UseCases.Autors.Queries.GetAutorQuery.ByID;
 using System.Collections.Generic;
 using UseCases.Autors.Commands.UpdateAutorCommand;
 using UseCases.Autors.Commands.DeleteAutorCommand;
+using UseCases.Common;
 
 namespace WebApp.Controllers
 {
@@ -37,11 +38,12 @@ namespace WebApp.Controllers
 
         }
 
+
         [HttpGet("get")]
-        public async Task<APIResponse<IEnumerable<AutorWithBooksDTO>>> GetAutorAll()
+        public async Task<APIResponse<PaginationResponse<AutorWithBooksDTO>>> GetAutorAll([FromQuery] GetAutorsRequest dto)
         {
-            var result = await mediator.Send(new GetAutorAllRequest());
-            return APIResponse<IEnumerable<AutorWithBooksDTO>>.OK(result);
+            var result = await mediator.Send(new GetAutorAllRequest(dto.Offset, dto.Limit, dto.Name, dto.Surname));
+            return APIResponse<PaginationResponse<AutorWithBooksDTO>>.OK(result);
         }
 
         [HttpDelete("delete/{id}")]

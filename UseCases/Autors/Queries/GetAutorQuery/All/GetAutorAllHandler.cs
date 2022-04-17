@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using DataAccess;
 using Domain;
 using Domain.Exceptions;
+using Infrastructure.Specification.Autors;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using UseCases.Common;
 using UseCases.DTO.Responses; 
 
 namespace UseCases.Autors.Queries.GetAutorQuery.All
 {
-    public class GetAutorAllHandler : IRequestHandler<GetAutorAllRequest, IEnumerable<AutorWithBooksDTO>>
+    public class GetAutorAllHandler : IRequestHandler<GetAutorAllRequest, PaginationResponse<AutorWithBooksDTO>>
     {
         private ApplicationDBContext dbContext;
 
@@ -22,13 +24,25 @@ namespace UseCases.Autors.Queries.GetAutorQuery.All
             this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<AutorWithBooksDTO>> Handle(GetAutorAllRequest request, CancellationToken cancellationToken)
+        public async Task<PaginationResponse<AutorWithBooksDTO>> Handle(GetAutorAllRequest request, CancellationToken cancellationToken)
         {
-            var autors = await dbContext.Autors.Include(a => a.Books).ToListAsync();
-            //if (autors == null)
-            //    throw new NotFoundException(typeof(Autor));
+            var specification = new AutorFilterSpecification(request.name, request.surname);
 
-            List<AutorWithBooksDTO> results = new(autors.Count);
+
+            // All autors from DB
+            var count = await dbContext.Autors.Where(specification.CreateCriterium()).CountAsync(cancellationToken);
+
+            //Results of your request
+            var autors = dbContext.Autors
+                .Include(a => a.Books)
+                .Where(specification.CreateCriterium())
+                .Skip(request.offset)
+                .Take(request.limit)
+                .AsEnumerable();
+                
+            
+
+            List<AutorWithBooksDTO> results = new(autors.Count());
 
             foreach (var autor in autors)
             {                
@@ -37,7 +51,7 @@ namespace UseCases.Autors.Queries.GetAutorQuery.All
                     bookTitles.Add(book.Title);
                 results.Add(new AutorWithBooksDTO() { ID = autor.ID, Name = autor.Name, Surname = autor.Surname, Books = bookTitles });
             }
-            return results;
+            return new PaginationResponse<AutorWithBooksDTO>(results, count);
         }
     }
 }
