@@ -1,5 +1,6 @@
 using DataAccess;
 using Infrastructure.JwtToken;
+using Infrastructure.RabbitMq;
 using Infrastructure.UserProvider;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,6 +89,17 @@ namespace WebApp
             services.AddSingleton<IJwtTokenProvider, JwtTokenProvider>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
+
+            //Add RabbitMq
+            services.AddScoped<IRabbitMq, RabbitMq>();
+            services.AddSingleton<IConnection>(options =>
+            {
+                var connection = new ConnectionFactory()
+                {
+                    HostName = "localhost"
+                };
+                return connection.CreateConnection();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

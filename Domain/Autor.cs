@@ -11,7 +11,8 @@ namespace Domain
         public Autor(string name, string surname)
         {
             Name = name;
-            Surname = surname;    
+            Surname = surname;
+            _books = new List<Book>(); 
         }
         private Autor()
         {
