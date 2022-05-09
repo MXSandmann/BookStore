@@ -59,6 +59,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPut("update")]
+        [HttpPost("update")]
         public async Task<APIResponse<int>> UpdateBook([FromBody] UpdateBookDTO dto)
         {
             var result = await mediator.Send(new UpdateBookRequest(dto.Id, dto.Title, dto.Price, dto.PagesCount, dto.Year));
