@@ -14,12 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UseCases.Books.Commands.CreateBookCommand;
-
 using WebApp.Middleware;
 
 namespace WebApp
@@ -43,19 +38,19 @@ namespace WebApp
             });
             services.AddSwaggerGen(c => 
             {
-                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Version = "v1", Title = "API" });
-                c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
+                c.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "API" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
                     Description = "BearerAuth",
                     Name = "Authorization",
-                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey
                 });
-                c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement()
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
                     { new OpenApiSecurityScheme
                         {
-                            Reference = new Microsoft.OpenApi.Models.OpenApiReference()
+                            Reference = new OpenApiReference()
                             {
                                 Type = ReferenceType.SecurityScheme,
                                 Id = "Bearer"
