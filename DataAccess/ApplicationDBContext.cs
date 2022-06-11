@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : DbContext, IApplicationDBContext
     {
         private ICurrentUserProvider _currentUserProvider;
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options, ICurrentUserProvider currentUserProvider)
@@ -39,7 +39,7 @@ namespace DataAccess
                     entry.Entity.Update(_currentUserProvider.UserId());
             }
             return base.SaveChangesAsync(cancellationToken);
-            
+
         }
     }
 }
