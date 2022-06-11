@@ -16,10 +16,10 @@ namespace UseCases.Autors.Queries.GetAutorQuery.ByID
 <<<<<<< HEAD
         private readonly ApplicationDBContext _dBContext;
 =======
-        private IApplicationDBContext dBContext;
->>>>>>> 633e0d7 (Trying to moq DbSet)
+        private ApplicationDBContext dBContext;
+>>>>>>> 9dd68dd (Add testcase with Find)
 
-        public GetAutoByIdHandler(IApplicationDBContext dBContext)
+        public GetAutoByIdHandler(ApplicationDBContext dBContext)
         {
             _dBContext = dBContext;
         }
@@ -39,7 +39,11 @@ namespace UseCases.Autors.Queries.GetAutorQuery.ByID
 
         public async Task<AutorDTO> HandleFind(GetAutorByIdRequest request, CancellationToken cancellationToken)
         {
+<<<<<<< HEAD
             var autor = await _dBContext.Autors.FindAsync(request.Id);//FirstOrDefaultAsync(a => a.ID == request.Id);
+=======
+            var autor = await dBContext.Autors.FindAsync(request.Id);//FirstOrDefaultAsync(a => a.ID == request.Id);
+>>>>>>> 9dd68dd (Add testcase with Find)
             if (autor == null)
                 throw new NotFoundException(typeof(Autor), request.Id);
 

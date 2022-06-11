@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class ApplicationDBContext : DbContext, IApplicationDBContext
+    public class ApplicationDBContext : DbContext 
     {
         private ICurrentUserProvider _currentUserProvider;
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options, ICurrentUserProvider currentUserProvider)
@@ -20,6 +20,10 @@ namespace DataAccess
             _currentUserProvider = currentUserProvider;
         }
 
+        public ApplicationDBContext()
+        {
+
+        }
         public DbSet<Book> Books { get; set; }
         public DbSet<Autor> Autors { get; set; }
         public DbSet<Genre> Genres { get; set; }
