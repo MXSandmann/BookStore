@@ -15,23 +15,23 @@ namespace WebApp.Controllers
     [Route("api/genre")]
     public class GenreController : ControllerBase
     {
-        private IMediator mediator;
+        private readonly IMediator _mediator;
         public GenreController(IMediator Mediator)
         {
-            mediator = Mediator;    
+            _mediator = Mediator;    
         }
 
         [HttpPost("create")]
         public async Task<APIResponse<int>> CreateGenre([FromBody] CreateGenreDTO dto)
         {
-            var result = await mediator.Send(new CreateGenreRequest(dto.Name));
+            var result = await _mediator.Send(new CreateGenreRequest(dto.Name));
             return APIResponse<int>.OK(result);
         }
 
         [HttpGet("get/{id}")]
         public async Task<APIResponse<GenreDTO>> GetGenreByID(int id) 
         {
-            var result = await mediator.Send(new GetGenreByIDRequest(id));
+            var result = await _mediator.Send(new GetGenreByIDRequest(id));
 
             return APIResponse<GenreDTO>.OK(result);
 
@@ -40,7 +40,7 @@ namespace WebApp.Controllers
         [HttpGet("get")]
         public async Task<APIResponse<IEnumerable<GenreDTO>>> GetGenresAll()
         {
-            var result = await mediator.Send(new GetGenreAllRequest());
+            var result = await _mediator.Send(new GetGenreAllRequest());
 
             return APIResponse<IEnumerable<GenreDTO>>.OK(result); 
 
@@ -49,7 +49,7 @@ namespace WebApp.Controllers
         [HttpDelete("delete/{id}")]
         public async Task<APIResponse<int>> DeleteGenre(int id)
         {
-            var result = await mediator.Send(new DeleteGenreRequest(id));
+            var result = await _mediator.Send(new DeleteGenreRequest(id));
             return APIResponse<int>.OK(result);
         }
     }

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UseCases.Users.DTO
+﻿namespace UseCases.Users.DTO
 {
     public class LoginResultDTO
     {
         public string Token { get; set; }
         public UserDTO User { get; set; }
-     }
+    }
 }

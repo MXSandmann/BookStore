@@ -1,5 +1,6 @@
 ﻿using DataAccess;
 using Domain;
+using Domain.Enums;
 using Domain.Exceptions;
 using Infrastructure.JwtToken;
 using MediatR;
@@ -16,17 +17,17 @@ namespace UseCases.Users.Commands.CreateUserCommand
 {
     internal class CreateUserHandler : IRequestHandler<CreateUserRequest, string>
     {
-        private ApplicationDBContext dbContext;
-        private IJwtTokenProvider jwtTokenProvider;
+        private readonly ApplicationDBContext _dbContext;
+        private readonly IJwtTokenProvider _jwtTokenProvider;
         public CreateUserHandler(ApplicationDBContext DbContext, IJwtTokenProvider JwtTokenProvider)
         {
-            dbContext = DbContext;
-            jwtTokenProvider = JwtTokenProvider;
+            _dbContext = DbContext;
+            _jwtTokenProvider = JwtTokenProvider;
         }
         public async Task<string> Handle(CreateUserRequest request, CancellationToken cancellationToken)
         {
             // Check if the new autor already exists in dbContext
-            var existingUser = await dbContext.Users.FirstOrDefaultAsync(s => s.UserName == request.UserName);
+            var existingUser = await _dbContext.Users.FirstOrDefaultAsync(s => s.UserName == request.UserName);
 
             if (existingUser != null)
             {
@@ -34,8 +35,8 @@ namespace UseCases.Users.Commands.CreateUserCommand
             }
 
             var user = new User(request.UserName, request.Password, request.Email, (Role)request.Role);
-            await dbContext.Users.AddAsync(user);
-            await dbContext.SaveChangesAsync();
+            await _dbContext.Users.AddAsync(user);
+            await _dbContext.SaveChangesAsync();
 
             var list = new List<Claim>()
             {
@@ -43,7 +44,7 @@ namespace UseCases.Users.Commands.CreateUserCommand
                 new Claim("UserName", user.UserName),
                 new Claim(ClaimTypes.Role, user.Role.ToString())
             };
-            return jwtTokenProvider.CreateToken(list);
+            return _jwtTokenProvider.CreateToken(list);
         }
     }
 }

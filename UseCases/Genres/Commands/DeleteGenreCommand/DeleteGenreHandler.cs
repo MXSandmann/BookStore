@@ -12,20 +12,20 @@ namespace UseCases.Genres.Commands.DeleteGenreCommand
 {
     public class DeleteGenreHandler : IRequestHandler<DeleteGenreRequest, int>
     {
-        private ApplicationDBContext dbContext;
+        private readonly ApplicationDBContext _dbContext;
 
         public DeleteGenreHandler(ApplicationDBContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<int> Handle(DeleteGenreRequest request, CancellationToken cancellationToken)
         {
-            var genre = await dbContext.Genres.Include(b => b.Books).FirstOrDefaultAsync(b => b.ID == request.Id);
+            var genre = await _dbContext.Genres.Include(b => b.Books).FirstOrDefaultAsync(b => b.ID == request.Id);
 
-            dbContext.Genres.Remove(genre);
+            _dbContext.Genres.Remove(genre);
 
-            await dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
             return request.Id;
         }
     }

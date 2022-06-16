@@ -17,17 +17,17 @@ namespace WebApp.Controllers
     [Route("api/book")]
     public class BookController : ControllerBase
     {
-        private IMediator mediator;
+        private readonly IMediator _mediator;
         public BookController(IMediator Mediator) 
         {
-            mediator = Mediator;
+            _mediator = Mediator;
         }
 
         [HttpPost("create")]
         [Authorize]
         public async Task<APIResponse<int>> CreateBook([FromBody] CreateBookDTO dto)
         {
-            var result = await mediator.Send(new CreateBookRequest(dto.Title,
+            var result = await _mediator.Send(new CreateBookRequest(dto.Title,
                 dto.Description,
                 dto.PagesCount,
                 dto.Year,
@@ -40,28 +40,28 @@ namespace WebApp.Controllers
         [HttpGet("get")]
         public async Task<APIResponse<IEnumerable<BookDTO>>> GetAllBooks()
         {
-            var result = await mediator.Send(new GetBookAllRequest());
+            var result = await _mediator.Send(new GetBookAllRequest());
             return APIResponse<IEnumerable<BookDTO>>.OK(result);
         }
 
         [HttpGet("get/{id}")]
         public async Task<APIResponse<BookDTO>> GetBookById(int id)
         {
-            var result = await mediator.Send(new GetBookByIDRequest(id));
+            var result = await _mediator.Send(new GetBookByIDRequest(id));
             return APIResponse<BookDTO>.OK(result);
         }
 
         [HttpDelete("delete/{id}")]
         public async Task<APIResponse<int>> DeleteBook(int id)
         {
-            var result = await mediator.Send(new DeleteBookRequest(id));
+            var result = await _mediator.Send(new DeleteBookRequest(id));
             return APIResponse<int>.OK(result);
         }
 
         [HttpPut("update")]        
         public async Task<APIResponse<int>> UpdateBook([FromBody] UpdateBookDTO dto)
         {
-            var result = await mediator.Send(new UpdateBookRequest(dto.Id, dto.Title, dto.Price, dto.PagesCount, dto.Year));
+            var result = await _mediator.Send(new UpdateBookRequest(dto.Id, dto.Title, dto.Price, dto.PagesCount, dto.Year));
             return APIResponse<int>.OK(result);
         }
     }

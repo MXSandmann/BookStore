@@ -14,10 +14,10 @@ namespace UseCases.Books.Commands.CreateBookCommand
 {
     public class CreateBookHandler : IRequestHandler<CreateBookRequest, int>
     {
-        private ApplicationDBContext dbContext;
+        private readonly ApplicationDBContext _dbContext;
         public CreateBookHandler(ApplicationDBContext DbContext)
         {
-            dbContext = DbContext;
+            _dbContext = DbContext;
         }
 
         public async Task<int> Handle(CreateBookRequest request, CancellationToken cancellationToken)
@@ -28,7 +28,7 @@ namespace UseCases.Books.Commands.CreateBookCommand
             // Find the existing autors in dbContext by the ID, given from dto
             foreach (var autorID in request.Autors)
             {
-                var autor = dbContext.Autors.FirstOrDefault(el => el.ID == autorID);
+                var autor = _dbContext.Autors.FirstOrDefault(el => el.ID == autorID);
                 
                 if (autor == null)
                     throw new NotFoundException(typeof(Autor), autorID);
@@ -43,7 +43,7 @@ namespace UseCases.Books.Commands.CreateBookCommand
             // Find the existing genres in dbContext by the ID, given from dto
             foreach (var genreID in request.Genres)
             {
-                var genre = dbContext.Genres.FirstOrDefault(el => el.ID == genreID);
+                var genre = _dbContext.Genres.FirstOrDefault(el => el.ID == genreID);
                 if (genre == null)
                     throw new NotFoundException(typeof(Genre), genreID);
 
@@ -53,7 +53,7 @@ namespace UseCases.Books.Commands.CreateBookCommand
 
             // Check if the new book already exists in dbContext
             // For this check the name of the book and the autors
-            var existingBook = dbContext.Books.Include(x => x.Autors).
+            var existingBook = _dbContext.Books.Include(x => x.Autors).
                 FirstOrDefault(s => s.Title == request.Title);                        
 
             
@@ -70,8 +70,8 @@ namespace UseCases.Books.Commands.CreateBookCommand
                 autors,
                 genres);
 
-            await dbContext.Books.AddAsync(book);
-            await dbContext.SaveChangesAsync();
+            await _dbContext.Books.AddAsync(book);
+            await _dbContext.SaveChangesAsync();
             return book.ID;
         }
     }

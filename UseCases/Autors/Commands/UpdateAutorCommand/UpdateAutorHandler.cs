@@ -14,19 +14,19 @@ namespace UseCases.Autors.Commands.UpdateAutorCommand
 {
     public class UpdateAutorHandler : IRequestHandler<UpdateAutorRequest, int>
     {
-        private ApplicationDBContext dbContext;
+        private readonly ApplicationDBContext _dbContext;
         public UpdateAutorHandler(ApplicationDBContext DbContext)
         {
-            dbContext = DbContext;
+            _dbContext = DbContext;
         }
         public async Task<int> Handle(UpdateAutorRequest request, CancellationToken cancellationToken)
         {
-            var autor = await dbContext.Autors.FirstOrDefaultAsync(a => a.ID == request.Id);
+            var autor = await _dbContext.Autors.FirstOrDefaultAsync(a => a.ID == request.Id);
             if (autor == null)
                 throw new NotFoundException(typeof(Autor), request.Id);
 
             autor.Update(request.Name, request.Surname);
-            await dbContext.SaveChangesAsync();           
+            await _dbContext.SaveChangesAsync();           
             return autor.ID;
         }
     }

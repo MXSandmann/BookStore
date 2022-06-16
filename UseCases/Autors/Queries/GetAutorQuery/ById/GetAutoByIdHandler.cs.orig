@@ -32,6 +32,8 @@ namespace UseCases.Autors.Queries.GetAutorQuery.ByID
 
             return new AutorWithBooksDTO() { Name = autor.Name, Surname = autor.Surname, Books = bookTitles };
         }
+<<<<<<< HEAD
+=======
 
         public async Task<AutorDTO> HandleFind(GetAutorByIdRequest request, CancellationToken cancellationToken)
         {
@@ -43,5 +45,6 @@ namespace UseCases.Autors.Queries.GetAutorQuery.ByID
 
             return new AutorDTO() { Name = autor.Name, Surname = autor.Surname };
         }
+>>>>>>> 731f508 (some small fix)
     }
 }

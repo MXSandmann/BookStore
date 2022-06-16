@@ -12,18 +12,18 @@ namespace UseCases.Autors.Commands.DeleteAutorCommand
 {
     public class DeleteAutorHandler : IRequestHandler<DeleteAutorRequest, int>
     {
-        private ApplicationDBContext dbContext;
+        private readonly ApplicationDBContext _dbContext;
 
         public DeleteAutorHandler(ApplicationDBContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<int> Handle(DeleteAutorRequest request, CancellationToken cancellationToken)
         {
-            var autor = await dbContext.Autors.Include(a => a.Books).FirstOrDefaultAsync(a => a.ID == request.Id);
-            dbContext.Autors.Remove(autor);
-            await dbContext.SaveChangesAsync();
+            var autor = await _dbContext.Autors.Include(a => a.Books).FirstOrDefaultAsync(a => a.ID == request.Id);
+            _dbContext.Autors.Remove(autor);
+            await _dbContext.SaveChangesAsync();
             return request.Id;
         }
     }

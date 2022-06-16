@@ -17,27 +17,27 @@ namespace UseCases.Autors.Queries.GetAutorQuery.All
 {
     public class GetAutorAllHandler : IRequestHandler<GetAutorAllRequest, PaginationResponse<AutorWithBooksDTO>>
     {
-        private ApplicationDBContext dbContext;
+        private readonly ApplicationDBContext _dbContext;
 
         public GetAutorAllHandler(ApplicationDBContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<PaginationResponse<AutorWithBooksDTO>> Handle(GetAutorAllRequest request, CancellationToken cancellationToken)
         {
-            var specification = new AutorFilterSpecification(request.name, request.surname);
+            var specification = new AutorFilterSpecification(request.Name, request.Surname);
 
 
             // All autors from DB
-            var count = await dbContext.Autors.Where(specification.CreateCriterium()).CountAsync(cancellationToken);
+            var count = await _dbContext.Autors.Where(specification.CreateCriterium()).CountAsync(cancellationToken);
 
             //Results of your request
-            var autors = dbContext.Autors
+            var autors = _dbContext.Autors
                 .Include(a => a.Books)
                 .Where(specification.CreateCriterium())
-                .Skip(request.offset)
-                .Take(request.limit)
+                .Skip(request.Offset)
+                .Take(request.Limit)
                 .AsEnumerable();
                 
             

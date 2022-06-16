@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{90AF7086-B5DF-4581-A668-18AA9EB823A0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppTest", "Test\WebAppTest.csproj", "{C2C9E1AA-E2B4-4202-85BB-F103BD499588}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBusConsumer", "EventBusConsumer\EventBusConsumer.csproj", "{064C5304-009D-49AC-959E-E07571777780}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EA02DC56-484A-4453-8306-760A048CC06E}"
@@ -45,10 +43,6 @@ Global
 		{90AF7086-B5DF-4581-A668-18AA9EB823A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90AF7086-B5DF-4581-A668-18AA9EB823A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90AF7086-B5DF-4581-A668-18AA9EB823A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C2C9E1AA-E2B4-4202-85BB-F103BD499588}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2C9E1AA-E2B4-4202-85BB-F103BD499588}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2C9E1AA-E2B4-4202-85BB-F103BD499588}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2C9E1AA-E2B4-4202-85BB-F103BD499588}.Release|Any CPU.Build.0 = Release|Any CPU
 		{064C5304-009D-49AC-959E-E07571777780}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{064C5304-009D-49AC-959E-E07571777780}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{064C5304-009D-49AC-959E-E07571777780}.Release|Any CPU.ActiveCfg = Release|Any CPU

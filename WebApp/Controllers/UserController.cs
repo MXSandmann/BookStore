@@ -13,23 +13,23 @@ namespace WebApp.Controllers
     [Route("api/users")]
     public class UserController : ControllerBase
     {
-        private IMediator mediator;
-        private ICurrentUserProvider currentUserProvider;
+        private readonly IMediator _mediator;
+        private readonly ICurrentUserProvider _currentUserProvider;
         public UserController(IMediator Mediator, ICurrentUserProvider CurrentUserProvider)
         {
-            mediator = Mediator;
-            currentUserProvider = CurrentUserProvider;
+            _mediator = Mediator;
+            _currentUserProvider = CurrentUserProvider;
         }
         [HttpPost("create")]
         public async Task<string> CreateUser([FromBody] CreateUserDTO dto)
         {
-            var result = await mediator.Send(new CreateUserRequest(dto.UserName, dto.Password, dto.Email, dto.Role));
+            var result = await _mediator.Send(new CreateUserRequest(dto.UserName, dto.Password, dto.Email, dto.Role));
             return result;
         }
         [HttpPost("login")]
         public async Task<LoginResultDTO> LoginUser([FromBody] LoginDTO dto)
         {
-            var result = await mediator.Send(new LoginUserRequest(dto.UserName, dto.Password));
+            var result = await _mediator.Send(new LoginUserRequest(dto.UserName, dto.Password));
             return result;
         }
 
@@ -37,7 +37,7 @@ namespace WebApp.Controllers
         [Authorize(Roles = "Admin")]
         public int Test()
         {
-            return currentUserProvider.UserId();
+            return _currentUserProvider.UserId();
         }
     }
 }

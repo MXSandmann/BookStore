@@ -14,18 +14,18 @@ namespace UseCases.Books.Commands.UpdateBookRequest
 {
     public class UpdateBookHandler : IRequestHandler<UpdateBookRequest, int>
     {
-        private ApplicationDBContext dbContext;
+        private readonly ApplicationDBContext _dbContext;
         public UpdateBookHandler(ApplicationDBContext DbContext)
         {
-            dbContext = DbContext;
+            _dbContext = DbContext;
         }
         public async Task<int> Handle(UpdateBookRequest request, CancellationToken cancellationToken)
         {
-            var book = await dbContext.Books.FirstOrDefaultAsync(b => b.ID == request.ID);
+            var book = await _dbContext.Books.FirstOrDefaultAsync(b => b.ID == request.ID);
             if (book is null)
                 throw new NotFoundException(typeof(Book), request.ID);
             book.Update(request.Title, request.PagesCount, request.Year, request.Price);
-            await dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
             return book.ID;
         }
     }

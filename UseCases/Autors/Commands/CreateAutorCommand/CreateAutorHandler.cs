@@ -15,18 +15,18 @@ namespace UseCases.Autors.Commands.CreateAutorCommand
 {
     public class CreateAutorHandler : IRequestHandler<CreateAutorRequest, int>
     {
-        private ApplicationDBContext dbContext;
-        private IRabbitMq rabbitMq; 
+        private readonly ApplicationDBContext _dbContext;
+        private readonly IRabbitMq _rabbitMq; 
         public CreateAutorHandler(ApplicationDBContext DbContext, IRabbitMq RabbitMq)
         {
-            dbContext = DbContext;
-            rabbitMq = RabbitMq;
+            _dbContext = DbContext;
+            _rabbitMq = RabbitMq;
         }
 
         public async Task<int> Handle(CreateAutorRequest request, CancellationToken cancellationToken)
         {
             // Check if the new autor already exists in dbContext
-            var existingAutor = dbContext.Autors.FirstOrDefault(s => s.Name == request.Name && s.Surname == request.Surname);
+            var existingAutor = _dbContext.Autors.FirstOrDefault(s => s.Name == request.Name && s.Surname == request.Surname);
 
             if (existingAutor != null)
             {
@@ -34,12 +34,10 @@ namespace UseCases.Autors.Commands.CreateAutorCommand
             }
 
             var autor = new Autor(request.Name, request.Surname);
-            await dbContext.Autors.AddAsync(autor);
-            await dbContext.SaveChangesAsync();
-
-            
-
-            rabbitMq.SendMessage("TestExchange", "TestKey", JsonConvert.SerializeObject(autor));
+            await _dbContext.Autors.AddAsync(autor);
+            await _dbContext.SaveChangesAsync();
+                      
+            _rabbitMq.SendMessage("TestExchange", "TestKey", JsonConvert.SerializeObject(autor));
 
             return autor.ID;
         }

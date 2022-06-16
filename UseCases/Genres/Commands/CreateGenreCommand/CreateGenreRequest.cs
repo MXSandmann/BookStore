@@ -13,11 +13,8 @@ namespace UseCases.Genres.Commands.CreateGenreCommand
         public CreateGenreRequest(string name)
         {
             Name = name;
-            //Books = books;
         }
 
         public string Name { get; }
-        //public List<Book> Books { get; }
-
     }
 }

@@ -17,16 +17,16 @@ namespace UseCases.Genres.Queries.GetGenreQuery.All
 {
     public class GetGenreAllHandler : IRequestHandler<GetGenreAllRequest, IEnumerable<GenreDTO>> 
     {
-        private ApplicationDBContext dbContext;
+        private readonly ApplicationDBContext _dbContext;
 
         public GetGenreAllHandler(ApplicationDBContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<IEnumerable<GenreDTO>> Handle(GetGenreAllRequest request, CancellationToken cancellationToken)
         {
-            var genres = await dbContext.Genres.ToListAsync();
+            var genres = await _dbContext.Genres.ToListAsync();
 
             List<GenreDTO> results = new(genres.Count);
             genres.ForEach(g => results.Add(new GenreDTO() { ID = g.ID, Name = g.Name }));

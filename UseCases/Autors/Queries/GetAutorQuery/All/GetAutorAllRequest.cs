@@ -7,17 +7,17 @@ namespace UseCases.Autors.Queries.GetAutorQuery.All
 {
     public class GetAutorAllRequest : IRequest<PaginationResponse<AutorWithBooksDTO>>
     {
-        public int offset { get; set; }
-        public int limit { get; set; }
+        public int Offset { get; set; }
+        public int Limit { get; set; }
 
-        public string name { get; set; }
-        public string surname { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
         public GetAutorAllRequest(int offset, int limit, string name, string surname)
         {
-            this.offset = offset;
-            this.limit = limit;
-            this.name = name;
-            this.surname = surname;
+            Offset = offset;
+            Limit = limit;
+            Name = name;
+            Surname = surname;
         }
     }
 }

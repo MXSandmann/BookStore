@@ -15,16 +15,16 @@ namespace UseCases.Books.Queries.GetBookByID
 {
     public class GetBookByIDHandler : IRequestHandler<GetBookByIDRequest, BookDTO>
     {
-        private ApplicationDBContext dbContext;
+        private readonly ApplicationDBContext _dbContext;
 
         public GetBookByIDHandler(ApplicationDBContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<BookDTO> Handle(GetBookByIDRequest request, CancellationToken cancellationToken)
         {
-            var book = await dbContext.Books.Include(b => b.Autors).Include(b => b.Genres).FirstOrDefaultAsync(b => b.ID == request.Id);
+            var book = await _dbContext.Books.Include(b => b.Autors).Include(b => b.Genres).FirstOrDefaultAsync(b => b.ID == request.Id);
             if (book == null)
                 throw new NotFoundException(typeof(Book), request.Id);
 

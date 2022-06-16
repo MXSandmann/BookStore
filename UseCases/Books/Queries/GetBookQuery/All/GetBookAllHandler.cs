@@ -15,16 +15,16 @@ namespace UseCases.Books.Queries.GetBookAll
 {
     public class GetBookAllHandler : IRequestHandler<GetBookAllRequest, IEnumerable<BookDTO>>
     {
-        private ApplicationDBContext dbContext;
+        private readonly ApplicationDBContext _dbContext;
 
         public GetBookAllHandler(ApplicationDBContext dbContext)
         {
-            this.dbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task<IEnumerable<BookDTO>> Handle(GetBookAllRequest request, CancellationToken cancellationToken)
         {
-            var books = await dbContext.Books.Include(b => b.Autors).Include(b => b.Genres).ToListAsync();
+            var books = await _dbContext.Books.Include(b => b.Autors).Include(b => b.Genres).ToListAsync();
 
             List<BookDTO> results = new(books.Count);
 

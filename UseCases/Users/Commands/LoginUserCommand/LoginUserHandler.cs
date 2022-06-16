@@ -4,11 +4,8 @@ using Domain.Exceptions;
 using Infrastructure.JwtToken;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UseCases.Users.DTO;
@@ -17,17 +14,17 @@ namespace UseCases.Users.Commands.LoginUserCommand
 {
     internal class LoginUserHandler : IRequestHandler<LoginUserRequest, LoginResultDTO>
     {
-        private ApplicationDBContext dbContext;
-        private IJwtTokenProvider jwtTokenProvider;
+        private readonly ApplicationDBContext _dbContext;
+        private readonly IJwtTokenProvider _jwtTokenProvider;
         public LoginUserHandler(ApplicationDBContext DbContext, IJwtTokenProvider JwtTokenProvider)
         {
-            dbContext = DbContext;
-            jwtTokenProvider = JwtTokenProvider;
+            _dbContext = DbContext;
+            _jwtTokenProvider = JwtTokenProvider;
         }
         public async Task<LoginResultDTO> Handle(LoginUserRequest request, CancellationToken cancellationToken)
         {
             // Check if the new autor already exists in dbContext
-            var user = await dbContext.Users.FirstOrDefaultAsync(s => s.UserName == request.UserName && s.Password == request.Password);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(s => s.UserName == request.UserName && s.Password == request.Password);
 
             if (user == null)
             {
@@ -43,7 +40,7 @@ namespace UseCases.Users.Commands.LoginUserCommand
 
             return new LoginResultDTO
             {
-                Token = jwtTokenProvider.CreateToken(list),
+                Token = _jwtTokenProvider.CreateToken(list),
                 User = new UserDTO()
                 {
                     UserName = user.UserName,
