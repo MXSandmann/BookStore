@@ -33,15 +33,15 @@ namespace UseCases.Autors.Queries.GetAutorQuery.ByID
             return new AutorWithBooksDTO() { Name = autor.Name, Surname = autor.Surname, Books = bookTitles };
         }
 
-        public async Task<AutorDTO> HandleFind(GetAutorByIdRequest request, CancellationToken cancellationToken)
-        {
-            var autor = await _dBContext.Autors.FindAsync(request.Id);//FirstOrDefaultAsync(a => a.ID == request.Id);
-            if (autor == null)
-                throw new NotFoundException(typeof(Autor), request.Id);
+        //public async Task<AutorDTO> HandleFind(GetAutorByIdRequest request, CancellationToken cancellationToken)
+        //{
+        //    var autor = await _dBContext.Autors.FindAsync(request.Id);
+        //    if (autor == null)
+        //        throw new NotFoundException(typeof(Autor), request.Id);
 
             
 
-            return new AutorDTO() { Name = autor.Name, Surname = autor.Surname };
-        }
+        //    return new AutorDTO() { Name = autor.Name, Surname = autor.Surname };
+        //}
     }
 }
