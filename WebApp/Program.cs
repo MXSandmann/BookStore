@@ -18,10 +18,17 @@ namespace WebApp
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                //.ConfigureAppConfiguration(AddAppConfiguration)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        public static void AddAppConfiguration(HostBuilderContext hostingContex, IConfigurationBuilder config)
+        {
+            config.Sources.Clear();
+            config.AddJsonFile("appsettings.json", optional: true);
+        }
 
         
     }
