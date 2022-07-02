@@ -11,8 +11,8 @@ namespace Infrastructure.Specification.Autors
     public class AutorFilterSpecification : SpecificationBase<Autor>
     {
 
-        private string _name;
-        private string _surname;
+        private readonly string _name;
+        private readonly string _surname;
 
         public AutorFilterSpecification(string name, string surname)
         {
@@ -25,7 +25,7 @@ namespace Infrastructure.Specification.Autors
             if (_name == null && _surname == null)
                 return AlwaysTrue();
 
-            ISpecification<Autor> compositeSpec = default(ISpecification<Autor>);
+            ISpecification<Autor> compositeSpec = default;
 
             if (_name != null)
                 compositeSpec = new AutorNameContainSpecification(_name);

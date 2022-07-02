@@ -20,7 +20,7 @@ namespace WebApp.Controllers
         private readonly IMediator _mediator;
         public AutorController(IMediator mediator)
         {
-            mediator = _mediator;
+            _mediator = mediator;
         }
 
         [HttpPost("create")]

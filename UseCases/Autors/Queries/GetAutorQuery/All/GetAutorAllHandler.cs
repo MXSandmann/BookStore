@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DataAccess;
+using DataAccess.Contracts;
 using Domain;
 using Domain.Exceptions;
 using Infrastructure.Specification.Autors;
@@ -16,31 +17,19 @@ using UseCases.DTO.Responses;
 namespace UseCases.Autors.Queries.GetAutorQuery.All
 {
     public class GetAutorAllHandler : IRequestHandler<GetAutorAllRequest, PaginationResponse<AutorWithBooksDTO>>
-    {
-        private readonly ApplicationDBContext _dbContext;
+    {        
+        private readonly IAutorRepository _autorRepository;
 
-        public GetAutorAllHandler(ApplicationDBContext dbContext)
-        {
-            _dbContext = dbContext;
+        public GetAutorAllHandler(IAutorRepository autorRepository)
+        {            
+            _autorRepository = autorRepository;
         }
 
         public async Task<PaginationResponse<AutorWithBooksDTO>> Handle(GetAutorAllRequest request, CancellationToken cancellationToken)
         {
             var specification = new AutorFilterSpecification(request.Name, request.Surname);
 
-
-            // All autors from DB
-            var count = await _dbContext.Autors.Where(specification.CreateCriterium()).CountAsync(cancellationToken);
-
-            //Results of your request
-            var autors = _dbContext.Autors
-                .Include(a => a.Books)
-                .Where(specification.CreateCriterium())
-                .Skip(request.Offset)
-                .Take(request.Limit)
-                .AsEnumerable();
-                
-            
+            var (autors, count) = await _autorRepository.GetAll(specification, request.Offset, request.Limit, cancellationToken);
 
             List<AutorWithBooksDTO> results = new(autors.Count());
 

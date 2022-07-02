@@ -1,4 +1,6 @@
 using DataAccess;
+using DataAccess.Contracts;
+using DataAccess.Repositories;
 using Infrastructure.JwtToken;
 using Infrastructure.RabbitMq;
 using Infrastructure.UserProvider;
@@ -95,6 +97,7 @@ namespace WebApp
                 };
                 return connection.CreateConnection();
             });
+            services.AddScoped<IAutorRepository, AutorRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -38,7 +38,7 @@ namespace WebAppUnitTest
 
 
             // Act
-            var autorMocked = await _sut.HandleFind(getAutorByIdRequest, new CancellationToken());
+            var autorMocked = await _sut.Handle(getAutorByIdRequest, CancellationToken.None);
 
 
             // Assert

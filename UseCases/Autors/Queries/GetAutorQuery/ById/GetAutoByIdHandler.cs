@@ -8,40 +8,23 @@ using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
 using UseCases.DTO.Responses;
+using DataAccess.Contracts;
 
 namespace UseCases.Autors.Queries.GetAutorQuery.ByID
 {
     public class GetAutoByIdHandler : IRequestHandler<GetAutorByIdRequest, AutorWithBooksDTO>
-    {
-        private readonly ApplicationDBContext _dBContext;
+    {        
+        private readonly IAutorRepository _autorRepository;
 
-        public GetAutoByIdHandler(ApplicationDBContext dBContext)
-        {
-            _dBContext = dBContext;
+        public GetAutoByIdHandler(IAutorRepository autorRepository)
+        {            
+            _autorRepository = autorRepository;
         }
 
         public async Task<AutorWithBooksDTO> Handle(GetAutorByIdRequest request, CancellationToken cancellationToken)
-        {
-            var autor = await _dBContext.Autors.Include(a => a.Books).FirstOrDefaultAsync(a => a.ID == request.Id);
-            if (autor == null)
-                throw new NotFoundException(typeof(Autor), request.Id);
-            
-            List<string> bookTitles = new(autor.Books.Count);
-            foreach (var book in autor.Books)
-                bookTitles.Add(book.Title);
-
+        {            
+            var (autor, bookTitles) = await _autorRepository.Get(request.Id, cancellationToken);
             return new AutorWithBooksDTO() { Name = autor.Name, Surname = autor.Surname, Books = bookTitles };
         }
-
-        //public async Task<AutorDTO> HandleFind(GetAutorByIdRequest request, CancellationToken cancellationToken)
-        //{
-        //    var autor = await _dBContext.Autors.FindAsync(request.Id);
-        //    if (autor == null)
-        //        throw new NotFoundException(typeof(Autor), request.Id);
-
-            
-
-        //    return new AutorDTO() { Name = autor.Name, Surname = autor.Surname };
-        //}
     }
 }
