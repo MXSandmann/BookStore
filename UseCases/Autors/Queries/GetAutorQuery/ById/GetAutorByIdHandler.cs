@@ -12,11 +12,11 @@ using DataAccess.Contracts;
 
 namespace UseCases.Autors.Queries.GetAutorQuery.ByID
 {
-    public class GetAutoByIdHandler : IRequestHandler<GetAutorByIdRequest, AutorWithBooksDTO>
+    public class GetAutorByIdHandler : IRequestHandler<GetAutorByIdRequest, AutorWithBooksDTO>
     {        
         private readonly IAutorRepository _autorRepository;
 
-        public GetAutoByIdHandler(IAutorRepository autorRepository)
+        public GetAutorByIdHandler(IAutorRepository autorRepository)
         {            
             _autorRepository = autorRepository;
         }
