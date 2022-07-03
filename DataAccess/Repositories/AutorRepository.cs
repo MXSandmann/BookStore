@@ -36,6 +36,14 @@ namespace DataAccess.Repositories
             return autor;
         }
 
+        public async Task<int> Delete(int id, CancellationToken cancellationToken = default)
+        {
+            var autor = await _dbContext.Autors.Include(a => a.Books).FirstOrDefaultAsync(a => a.ID == id, cancellationToken);
+            _dbContext.Autors.Remove(autor);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return id;
+        }
+
         public async Task<(Autor, List<string>)> Get(int id, CancellationToken cancellationToken)
         {
             var autor = await _dbContext.Autors.Include(a => a.Books).FirstOrDefaultAsync(a => a.ID == id, cancellationToken);
@@ -62,6 +70,17 @@ namespace DataAccess.Repositories
                 .Take(limit)
                 .AsEnumerable();
             return (autors, count);
+        }
+
+        public async Task<int> Update(int id, string name, string surname, CancellationToken cancellationToken = default)
+        {
+            var autor = await _dbContext.Autors.FirstOrDefaultAsync(a => a.ID == id, cancellationToken);
+            if (autor == null)
+                throw new NotFoundException(typeof(Autor), id);
+
+            autor.Update(name, surname);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            return autor.ID;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DataAccess;
+using DataAccess.Contracts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,20 +12,18 @@ using System.Threading.Tasks;
 namespace UseCases.Autors.Commands.DeleteAutorCommand
 {
     public class DeleteAutorHandler : IRequestHandler<DeleteAutorRequest, int>
-    {
-        private readonly ApplicationDBContext _dbContext;
+    {        
+        private readonly IAutorRepository _autorRepository;
 
-        public DeleteAutorHandler(ApplicationDBContext dbContext)
-        {
-            _dbContext = dbContext;
+        public DeleteAutorHandler(IAutorRepository autorRepository)
+        {            
+            _autorRepository = autorRepository;
         }
 
         public async Task<int> Handle(DeleteAutorRequest request, CancellationToken cancellationToken)
         {
-            var autor = await _dbContext.Autors.Include(a => a.Books).FirstOrDefaultAsync(a => a.ID == request.Id);
-            _dbContext.Autors.Remove(autor);
-            await _dbContext.SaveChangesAsync();
-            return request.Id;
+            var deletedId = await _autorRepository.Delete(request.Id, cancellationToken);
+            return deletedId;
         }
     }
 }
