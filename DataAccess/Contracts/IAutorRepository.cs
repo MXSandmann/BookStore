@@ -10,5 +10,6 @@ namespace DataAccess.Contracts
     {
         Task<(Autor, List<string>)> Get(int id, CancellationToken cancellationToken = default);
         Task<(IEnumerable<Autor>, int)> GetAll(AutorFilterSpecification specification, int offset, int limit, CancellationToken cancellationToken = default);
+        Task<Autor> Create(string Name, string Surname, CancellationToken cancellationToken = default);
     }
 }

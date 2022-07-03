@@ -3,10 +3,8 @@ using Domain;
 using Domain.Exceptions;
 using Infrastructure.Specification.Autors;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,10 +13,27 @@ namespace DataAccess.Repositories
     public class AutorRepository : IAutorRepository
     {
         private readonly ApplicationDBContext _dbContext;
-
+        
         public AutorRepository(ApplicationDBContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public async Task<Autor> Create(string Name, string Surname, CancellationToken cancellationToken = default)
+        {
+            // Check if the new autor already exists in dbContext
+            var existingAutor = await _dbContext.Autors.FirstOrDefaultAsync(s => s.Name == Name && s.Surname == Surname, cancellationToken);
+
+            if (existingAutor != null)
+            {
+                throw new AlreadyExistException(typeof(Autor), existingAutor.ID);
+            }
+
+            var autor = new Autor(Name, Surname);
+            await _dbContext.Autors.AddAsync(autor, cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+                       
+            return autor;
         }
 
         public async Task<(Autor, List<string>)> Get(int id, CancellationToken cancellationToken)
