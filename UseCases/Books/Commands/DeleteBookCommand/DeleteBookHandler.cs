@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using DataAccess;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using DataAccess;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace UseCases.Books.Commands.DeleteBookCommand
 {
@@ -24,7 +20,7 @@ namespace UseCases.Books.Commands.DeleteBookCommand
             var book = await _dbContext.Books.Include(b => b.Autors).Include(b => b.Genres).FirstOrDefaultAsync(b => b.ID == request.Id);
 
             _dbContext.Books.Remove(book);
-            
+
             await _dbContext.SaveChangesAsync();
             return request.Id;
         }

@@ -1,9 +1,5 @@
 ﻿using RabbitMQ.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.RabbitMq
 {
@@ -21,7 +17,7 @@ namespace Infrastructure.RabbitMq
         {
             var model = _connection.CreateModel();
             model.BasicPublish(exchange, key, body: Encoding.UTF8.GetBytes(message));
-            
+
         }
     }
 }

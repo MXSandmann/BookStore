@@ -2,15 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UseCases.Autors.Commands.CreateAutorCommand;
-using WebApp.DTO.Requests;
-using WebApp.DTO.Responses;
-using UseCases.DTO.Responses;
+using UseCases.Autors.Commands.DeleteAutorCommand;
+using UseCases.Autors.Commands.UpdateAutorCommand;
 using UseCases.Autors.Queries.GetAutorQuery.All;
 using UseCases.Autors.Queries.GetAutorQuery.ByID;
-using System.Collections.Generic;
-using UseCases.Autors.Commands.UpdateAutorCommand;
-using UseCases.Autors.Commands.DeleteAutorCommand;
 using UseCases.Common;
+using UseCases.DTO.Responses;
+using WebApp.DTO.Requests;
+using WebApp.DTO.Responses;
 
 namespace WebApp.Controllers
 {
@@ -53,7 +52,7 @@ namespace WebApp.Controllers
             return APIResponse<int>.OK(result);
         }
 
-        
+
         [HttpPut("update")]
         public async Task<APIResponse<int>> UpdateAutor([FromBody] UpdateAutorDTO dto)
         {

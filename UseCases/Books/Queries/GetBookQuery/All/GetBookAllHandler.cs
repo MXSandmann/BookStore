@@ -1,15 +1,10 @@
 ﻿using DataAccess;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UseCases.DTO.Responses;
-using Domain.Exceptions;
-using Domain;
 
 namespace UseCases.Books.Queries.GetBookAll
 {
@@ -33,13 +28,13 @@ namespace UseCases.Books.Queries.GetBookAll
                 // Add all autors of this book as a structure
                 List<AutorDTO> autorsOfBook = new(book.Autors.Count);
                 foreach (var autor in book.Autors)
-                {                    
+                {
                     autorsOfBook.Add(new() { Name = autor.Name, Surname = autor.Surname });
                 }
 
                 // Add all genres of this book as list of strings
                 List<string> genresOfBook = new(book.Genres.Count);
-                foreach(var genre in book.Genres)
+                foreach (var genre in book.Genres)
                 {
                     genresOfBook.Add(genre.Name);
                 }

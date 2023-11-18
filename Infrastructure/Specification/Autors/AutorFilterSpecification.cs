@@ -1,10 +1,6 @@
 ﻿using Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Specification.Autors
 {
@@ -33,7 +29,7 @@ namespace Infrastructure.Specification.Autors
             if (_surname != null)
             {
                 var autorSurnameSpec = new AutorSurnameContainSpecification(_surname);
-                compositeSpec = compositeSpec == null ? autorSurnameSpec : compositeSpec.Or(autorSurnameSpec); 
+                compositeSpec = compositeSpec == null ? autorSurnameSpec : compositeSpec.Or(autorSurnameSpec);
 
             }
 

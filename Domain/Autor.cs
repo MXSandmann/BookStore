@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Domain
 {
@@ -12,7 +8,7 @@ namespace Domain
         {
             Name = name;
             Surname = surname;
-            _books = new List<Book>(); 
+            _books = new List<Book>();
         }
         private Autor()
         {

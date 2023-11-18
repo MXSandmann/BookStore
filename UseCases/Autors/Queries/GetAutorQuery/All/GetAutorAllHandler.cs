@@ -1,27 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using DataAccess;
-using DataAccess.Contracts;
-using Domain;
-using Domain.Exceptions;
+﻿using DataAccess.Contracts;
 using Infrastructure.Specification.Autors;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using UseCases.Common;
-using UseCases.DTO.Responses; 
+using UseCases.DTO.Responses;
 
 namespace UseCases.Autors.Queries.GetAutorQuery.All
 {
     public class GetAutorAllHandler : IRequestHandler<GetAutorAllRequest, PaginationResponse<AutorWithBooksDTO>>
-    {        
+    {
         private readonly IAutorRepository _autorRepository;
 
         public GetAutorAllHandler(IAutorRepository autorRepository)
-        {            
+        {
             _autorRepository = autorRepository;
         }
 
@@ -34,7 +28,7 @@ namespace UseCases.Autors.Queries.GetAutorQuery.All
             List<AutorWithBooksDTO> results = new(autors.Count());
 
             foreach (var autor in autors)
-            {                
+            {
                 List<string> bookTitles = new(autor.Books.Count);
                 foreach (var book in autor.Books)
                     bookTitles.Add(book.Title);

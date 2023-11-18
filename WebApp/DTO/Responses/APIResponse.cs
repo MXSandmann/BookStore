@@ -10,7 +10,7 @@
         }
 
         public int Code { get; }
-        public string ErrorMessage { get; }    
+        public string ErrorMessage { get; }
         public bool Success { get; }
 
         public static APIResponse OK()
@@ -26,15 +26,15 @@
 
     public class APIResponse<T> : APIResponse
     {
-        public T Data { get; }  
+        public T Data { get; }
         public APIResponse(int code, string errorMessage, T data) : base(code, errorMessage)
         {
-            Data = data;    
+            Data = data;
         }
 
         public static APIResponse<T> OK(T data)
         {
-            return new APIResponse<T>(200, string.Empty, data); 
+            return new APIResponse<T>(200, string.Empty, data);
         }
 
     }

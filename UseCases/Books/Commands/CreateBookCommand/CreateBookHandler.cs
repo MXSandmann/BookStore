@@ -2,13 +2,12 @@
 using Domain;
 using Domain.Exceptions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace UseCases.Books.Commands.CreateBookCommand
 {
@@ -29,7 +28,7 @@ namespace UseCases.Books.Commands.CreateBookCommand
             foreach (var autorID in request.Autors)
             {
                 var autor = _dbContext.Autors.FirstOrDefault(el => el.ID == autorID);
-                
+
                 if (autor == null)
                     throw new NotFoundException(typeof(Autor), autorID);
 
@@ -54,14 +53,14 @@ namespace UseCases.Books.Commands.CreateBookCommand
             // Check if the new book already exists in dbContext
             // For this check the name of the book and the autors
             var existingBook = _dbContext.Books.Include(x => x.Autors).
-                FirstOrDefault(s => s.Title == request.Title);                        
+                FirstOrDefault(s => s.Title == request.Title);
 
-            
+
             if ((existingBook != null) && (existingBook.Autors.SequenceEqual(autors)))
             {
                 throw new AlreadyExistException(typeof(Book), existingBook.ID);
             }
-                                 
+
             var book = new Book(request.Title,
                 request.Description,
                 request.PagesCount,

@@ -1,11 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.JwtToken
 {
@@ -21,7 +17,7 @@ namespace Infrastructure.JwtToken
             var handler = new JwtSecurityTokenHandler();
             var signingCredentials = new SigningCredentials(JwtOptions.GetKey(), SecurityAlgorithms.HmacSha256Signature);
             var identity = new ClaimsIdentity(claims);
-            var token = handler.CreateJwtSecurityToken(subject: identity, 
+            var token = handler.CreateJwtSecurityToken(subject: identity,
                 signingCredentials: signingCredentials,
                 issuer: JwtOptions.Issuer,
                 audience: JwtOptions.Audience);

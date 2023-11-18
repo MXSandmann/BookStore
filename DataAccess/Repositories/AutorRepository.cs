@@ -13,7 +13,7 @@ namespace DataAccess.Repositories
     public class AutorRepository : IAutorRepository
     {
         private readonly ApplicationDBContext _dbContext;
-        
+
         public AutorRepository(ApplicationDBContext dbContext)
         {
             _dbContext = dbContext;
@@ -32,7 +32,7 @@ namespace DataAccess.Repositories
             var autor = new Autor(Name, Surname);
             await _dbContext.Autors.AddAsync(autor, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
-                       
+
             return autor;
         }
 
@@ -58,7 +58,7 @@ namespace DataAccess.Repositories
         }
 
         public async Task<(IEnumerable<Autor>, int)> GetAll(AutorFilterSpecification specification, int offset, int limit, CancellationToken cancellationToken)
-        {           
+        {
             // All autors from DB
             var count = await _dbContext.Autors.Where(specification.CreateCriterium()).CountAsync(cancellationToken);
 

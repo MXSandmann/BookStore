@@ -1,22 +1,16 @@
-﻿using DataAccess;
-using DataAccess.Contracts;
+﻿using DataAccess.Contracts;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace UseCases.Autors.Commands.DeleteAutorCommand
 {
     public class DeleteAutorHandler : IRequestHandler<DeleteAutorRequest, int>
-    {        
+    {
         private readonly IAutorRepository _autorRepository;
 
         public DeleteAutorHandler(IAutorRepository autorRepository)
-        {            
+        {
             _autorRepository = autorRepository;
         }
 

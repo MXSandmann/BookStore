@@ -29,9 +29,9 @@ namespace EventBusConsumer
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            _connection.Close();    
+            _connection.Close();
         }
 
-       
+
     }
 }

@@ -2,16 +2,12 @@
 using Domain.Base;
 using Infrastructure.UserProvider;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DataAccess
 {
-    public class ApplicationDBContext : DbContext 
+    public class ApplicationDBContext : DbContext
     {
         private ICurrentUserProvider _currentUserProvider;
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options, ICurrentUserProvider currentUserProvider)

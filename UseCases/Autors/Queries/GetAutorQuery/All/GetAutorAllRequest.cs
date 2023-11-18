@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System.Collections.Generic;
 using UseCases.Common;
 using UseCases.DTO.Responses;
 

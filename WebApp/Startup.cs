@@ -38,7 +38,7 @@ namespace WebApp
             {
                 x.UseSqlServer(_conf.GetConnectionString("Default"));
             });
-            services.AddSwaggerGen(c => 
+            services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "API" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -64,7 +64,7 @@ namespace WebApp
                         }
                     }
                 });
-                
+
             });
 
             var jwtOptions = _conf.GetSection(nameof(JwtOptions)).Get<JwtOptions>();

@@ -1,16 +1,16 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UseCases.Books.Commands.CreateBookCommand;
+using UseCases.Books.Commands.DeleteBookCommand;
+using UseCases.Books.Commands.UpdateBookRequest;
 using UseCases.Books.Queries.GetBookAll;
 using UseCases.Books.Queries.GetBookByID;
 using UseCases.DTO.Responses;
 using WebApp.DTO.Requests;
 using WebApp.DTO.Responses;
-using UseCases.Books.Commands.DeleteBookCommand;
-using Microsoft.AspNetCore.Authorization;
-using UseCases.Books.Commands.UpdateBookRequest;
 
 namespace WebApp.Controllers
 {
@@ -18,7 +18,7 @@ namespace WebApp.Controllers
     public class BookController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public BookController(IMediator Mediator) 
+        public BookController(IMediator Mediator)
         {
             _mediator = Mediator;
         }
@@ -58,7 +58,7 @@ namespace WebApp.Controllers
             return APIResponse<int>.OK(result);
         }
 
-        [HttpPut("update")]        
+        [HttpPut("update")]
         public async Task<APIResponse<int>> UpdateBook([FromBody] UpdateBookDTO dto)
         {
             var result = await _mediator.Send(new UpdateBookRequest(dto.Id, dto.Title, dto.Price, dto.PagesCount, dto.Year));

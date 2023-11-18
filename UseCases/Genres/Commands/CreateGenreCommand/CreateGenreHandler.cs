@@ -1,11 +1,8 @@
-﻿using MediatR;
-using DataAccess;
+﻿using DataAccess;
 using Domain;
 using Domain.Exceptions;
-using System;
-using System.Collections.Generic;
+using MediatR;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,7 +16,7 @@ namespace UseCases.Genres.Commands.CreateGenreCommand
             _dbcontext = DbContext;
         }
 
-        
+
 
 
         public async Task<int> Handle(CreateGenreRequest request, CancellationToken cancellationToken)

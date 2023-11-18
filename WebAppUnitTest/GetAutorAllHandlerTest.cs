@@ -1,17 +1,13 @@
-using DataAccess;
 using DataAccess.Contracts;
-using Domain;
-using Microsoft.EntityFrameworkCore;
 using Moq;
+using Shouldly;
 using System.Threading;
 using System.Threading.Tasks;
 using UseCases.Autors.Queries.GetAutorQuery.All;
-using UseCases.Autors.Queries.GetAutorQuery.ByID;
-using WebAppUnitTest.Mocks;
-using Xunit;
-using Shouldly;
 using UseCases.Common;
 using UseCases.DTO.Responses;
+using WebAppUnitTest.Mocks;
+using Xunit;
 
 namespace WebAppUnitTest
 {
